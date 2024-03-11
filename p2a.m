@@ -1,4 +1,5 @@
 % TRABALHO 1 - Sinais e Sistemas
+% Problema 2 - a)
 clear; close all; clc;
 
 %%Criar pontos
