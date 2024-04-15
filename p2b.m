@@ -62,8 +62,8 @@ while true
             tn2 = linspace(-0.003,0.003,1000)+eps; % VERIFICAR
             
             % xk 
-            x1t =(heaviside(t + 0.001) - heaviside(t - 0.001)) .* (5.0e5*t + 500) +...
-            (heaviside(t - 0.001) - heaviside(t - 0.003)) .* (-5.0e5*t + 1500);
+            x1t =(heaviside(t + 0.001) - heaviside(t - 0.001)) * (5.0e5*t + 500) +...
+            (heaviside(t - 0.001) - heaviside(t - 0.003)) * (-5.0e5*t + 1500);
             x1tn = double(subs(x1t,t,tn));
             subplot(3,2,1), plot(tn,x1tn, 'LineWidth', 2), title('x_1(t)'), xlabel('t(s)'), grid on;
             axis([min(tn) max(tn) min(x1tn)*1.1 max(x1tn)*1.1])
@@ -77,25 +77,25 @@ while true
             subplot(3,2,2), plot(tn1,z1tn, 'LineWidth', 2), title('z_1(t)'), xlabel('t(s)'), grid on;
             axis([min(tn1) max(tn1) min(z1tn)*1.1 max(z1tn)*1.1])
             
-            % xkpt - VERIFICAR!!!
+            % xkpt
             x1mt = subs(x1t,t,-t);
             x1pt = (x1t + x1mt)/2;
             x1ptn = double(subs(x1pt,t,tn2));
             subplot(3,2,3), plot(tn2,x1ptn, 'LineWidth', 2), title('x_1P(t)'), xlabel('t(s)'), grid on;
             axis([min(tn2) max(tn2) min(x1ptn)*1.1 max(x1ptn)*1.1])
             
-            % xkit - VERIFICAR!!!
+            % xkit
             x1it = (x1t - x1mt)/2;
             x1itn = double(subs(x1it,t,tn2));
             subplot(3,2,4), plot(tn2,x1itn, 'LineWidth', 2), title('x_1I(t)'), xlabel('t(s)'), grid on;
             axis([min(tn2) max(tn2) -1000*1.1 1000*1.1])
             
-            % derivada - VERIFICAR!!!
+            % derivada
             u1t = diff(x1t);
             u1tn = double(subs(u1t,t,tn));
             subplot(3,2,5), plot(tn,u1tn, 'LineWidth', 2), title('u_1(t)'), xlabel('t(s)'), grid on;
             hold on;
-            axis([min(tn) max(tn) -1000*1.1 1000*1.1])
+            axis([min(tn) max(tn) -5e5*1.1 5e5*1.1])
             
             % primitiva
             v1t = int(x1t,t,-inf,t);
@@ -104,7 +104,7 @@ while true
             axis([min(tn) max(tn) min(v1tn)*1.1 max(v1tn)*1.1])
             
             
-        case 2 %FALTA METER O SINAL CERTO AQUI!!!
+        case 2
             syms t
             tn = linspace(-0.004, 0.004, 1000)+eps;
             tn1 = linspace(-8e-3,3e-3,1000)+eps;
@@ -145,9 +145,9 @@ while true
             subplot(3,2,5), plot(tn,u2tn, 'LineWidth', 2), title('u_2(t)'), xlabel('t(s)'), grid on;
             hold on;
             stem(-2e-3,-1000,'vb','filled', 'LineWidth', 2)
-            stem(-1e-3,1000,'^b','filled','LineWidth', 2)
+            stem(-1e-3,2000,'^b','filled','LineWidth', 2)
             stem(2e-3,-1000,'vb','filled', 'LineWidth', 2)
-            axis([min(tn) max(tn) -1000*1.1 1000*1.1])
+            axis([min(tn) max(tn) -1000*1.1 2000*1.1])
             
             % primitiva
             v2t = int(x2t,t,-inf,t);
@@ -156,56 +156,57 @@ while true
             axis([min(tn) max(tn) min(v2tn)*1.1 max(v2tn)*1.1])
             
             
-        case 3 %FALTA METER O SINAL CERTO AQUI!!!
+        case 3
             syms t
-            tn = linspace(-0.004, 0.004, 1000)+eps;
-            tn1 = linspace(-8e-3,3e-3,1000)+eps;
-            tn2 = linspace(-0.003,0.003,1000)+eps;
+            tn = linspace(-4e-3, 4e-3, 1000)+eps;
+            tn1 = linspace(0,8e-3,1000)+eps;
+            tn2 = linspace(-4e-3,4e-3,1000)+eps;
             
             % xk
-            x0t = 10^3*(heaviside(t+0.002) - heaviside(t-0.002));
-            x2t = x0t*sign(t+1e-3);
-            x2tn = double(subs(x2t,t,tn));
-            subplot(3,2,1), plot(tn,x2tn, 'LineWidth', 2), title('x_2(t)'), xlabel('t(s)'), grid on;
-            axis([min(tn) max(tn) min(x2tn)*1.1 max(x2tn)*1.1])
+            x3t =  (heaviside(t+0.003) - heaviside(t + 0.001)) .* (-5.0e5*t - 1500) +...
+            (-500 *(heaviside(t + 0.001) - heaviside(t - 0.001))) .* sign(t) +...
+            (heaviside(t - 0.001) - heaviside(t - 0.003)) .* (-5.0e5*t + 1500);
+            x3tn = double(subs(x3t,t,tn));
+            subplot(3,2,1), plot(tn,x3tn, 'LineWidth', 2), title('x_3(t)'), xlabel('t(s)'), grid on;
+            axis([min(tn) max(tn) min(x3tn)*1.1 max(x3tn)*1.1])
             
             % zk
             
             a = -(k+1)/4;
             b = ((-1)^k)*(4*a*10^-3);
-            z2t = simplify(subs(x2t,t,a*t+b));
-            z2tn = double(subs(z2t,t,tn1));
-            subplot(3,2,2), plot(tn1,z2tn, 'LineWidth', 2), title('z_2(t)'), xlabel('t(s)'), grid on;
-            axis([min(tn1) max(tn1) min(z2tn)*1.1 max(z2tn)*1.1])
+            z3t = simplify(subs(x3t,t,a*t+b));
+            z3tn = double(subs(z3t,t,tn1));
+            subplot(3,2,2), plot(tn1,z3tn, 'LineWidth', 2), title('z_3(t)'), xlabel('t(s)'), grid on;
+            axis([min(tn1) max(tn1) min(z3tn)*1.1 max(z3tn)*1.1])
             
             % xkpt
-            x2mt = subs(x2t,t,-t);
-            x2pt = (x2t + x2mt)/2;
-            x2ptn = double(subs(x2pt,t,tn2));
-            subplot(3,2,3), plot(tn2,x2ptn, 'LineWidth', 2), title('x_2P(t)'), xlabel('t(s)'), grid on;
-            axis([min(tn2) max(tn2) min(x2ptn)*1.1 max(x2ptn)*1.1])
+            x3mt = subs(x3t,t,-t);
+            x3pt = (x3t + x3mt)/2;
+            x3ptn = double(subs(x3pt,t,tn2));
+            subplot(3,2,3), plot(tn2,x3ptn, 'LineWidth', 2), title('x_3P(t)'), xlabel('t(s)'), grid on;
+            axis([min(tn2) max(tn2) -1000*1.1 1000*1.1])
             
             % xkit
-            x2it = (x2t - x2mt)/2;
-            x2itn = double(subs(x2it,t,tn2));
-            subplot(3,2,4), plot(tn2,x2itn, 'LineWidth', 2), title('x_2I(t)'), xlabel('t(s)'), grid on;
+            x3it = (x3t - x3mt)/2;
+            x3itn = double(subs(x3it,t,tn2));
+            subplot(3,2,4), plot(tn2,x3itn, 'LineWidth', 2), title('x_3I(t)'), xlabel('t(s)'), grid on;
             axis([min(tn2) max(tn2) -1000*1.1 1000*1.1])
             
             % derivada
-            u2t = diff(x2t);
-            u2tn = double(subs(u2t,t,tn));
-            subplot(3,2,5), plot(tn,u2tn, 'LineWidth', 2), title('u_2(t)'), xlabel('t(s)'), grid on;
+            u3t = diff(x3t);
+            u3tn = double(subs(u3t,t,tn));
+            subplot(3,2,5), plot(tn,u3tn, 'LineWidth', 2), title('u_3(t)'), xlabel('t(s)'), grid on;
             hold on;
-            stem(-2e-3,-1000,'vb','filled', 'LineWidth', 2)
-            stem(-1e-3,1000,'^b','filled','LineWidth', 2)
-            stem(2e-3,-1000,'vb','filled', 'LineWidth', 2)
-            axis([min(tn) max(tn) -1000*1.1 1000*1.1])
+            stem(-1e-3,500,'^b','filled', 'LineWidth', 2)
+            stem(0,-1000,'vb','filled','LineWidth', 2)
+            stem(1e-3,500,'^b','filled', 'LineWidth', 2)
+            axis([min(tn) max(tn) -5e5*1.1 5e5*1.1])
             
             % primitiva
-            v2t = int(x2t,t,-inf,t);
-            v2tn = double(subs(v2t,t,tn));
-            subplot(3,2,6), plot(tn,v2tn, 'LineWidth', 2), title('v_2(t)'), xlabel('t(s)'), grid on;
-            axis([min(tn) max(tn) min(v2tn)*1.1 max(v2tn)*1.1])
+            v3t = int(x3t,t,-inf,t);
+            v3tn = double(subs(v3t,t,tn));
+            subplot(3,2,6), plot(tn,v3tn, 'LineWidth', 2), title('v_3(t)'), xlabel('t(s)'), grid on;
+            axis([min(tn) max(tn) min(v3tn)*1.1 0.1*1.1])
         
         otherwise
             break
