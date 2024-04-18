@@ -18,7 +18,6 @@ while true
             axis([min(tn) max(tn) min(x0tn)*1.1 max(x0tn)*1.1])
             
             % zk
-            
             a = -(k+1)/4;
             b = ((-1)^k)*(4*a*10^-3);
             z0t = simplify(subs(x0t,t,a*t+b));
@@ -54,7 +53,6 @@ while true
             subplot(3,2,6), plot(tn,v0tn, 'LineWidth', 2), title('v_0(t)'), xlabel('t(s)'), grid on;
             axis([min(tn) max(tn) min(v0tn)*1.1 max(v0tn)*1.1])
         
-%--------------------------------------------------------------------------------------------------------------------------
         case 1
             syms t
             tn = linspace(-4e-3, 4e-3, 1000)+eps;
