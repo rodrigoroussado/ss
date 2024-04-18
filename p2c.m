@@ -18,24 +18,24 @@ x3t = (heaviside(t+0.003) - heaviside(t + 0.001)) .* (-5.0e5*t - 1500) +...
 
 % Calcular sinais resultantes do produto e respetiva integral
 i00 = double(int(x0t*x0t,t,-2e-3,2e-3));
-i01 = double(int(x0t*x1t,t,-2e-3, 3e-3)); % CONFIRMAR COM TEÓRICO!!!
+i01 = double(int(x0t*x1t,t,-2e-3, 3e-3));
 i02 = double(int(x0t*x2t,t,-2e-3,2e-3));
 i03 = double(int(x0t*x3t,t,-3e-3,3e-3));
 
 i10 = i01;
-i11 = double(int(x1t*x1t,t,-1e-3,3e-3)); % CONFIRMAR COM TEÓRICO!!!
-i12 = double(int(x1t*x2t,t,-2e-3,3e-3)); % CONFIRMAR COM TEÓRICO!!!
+i11 = double(int(x1t*x1t,t,-1e-3,3e-3));
+i12 = double(int(x1t*x2t,t,-2e-3,3e-3));
 i13 = double(int(x1t*x3t,t,-3e-3,3e-3));
 
 i20 = i02;
 i21 = i12;
 i22 = double(int(x2t*x2t,t,-2e-3,2e-3));
-i23 = double(int(x2t*x3t,t,-3e-3,3e-3)); % CONFIRMAR COM TEÓRICO!!!
+i23 = double(int(x2t*x3t,t,-3e-3,3e-3));
 
 i30 = i03;
 i31 = i13;
 i32 = i23;
-i33 = double(int(x3t*x3t,t,-3e-3,3e-3)); % CONFIRMAR COM TEÓRICO!!!
+i33 = double(int(x3t*x3t,t,-3e-3,3e-3));
 
 
 % Criar tabela prod. internos e energias
@@ -55,6 +55,8 @@ E3 = i33;
 Energia = [E0;E1;E2;E3];
 
 T = table(LabelLinhas, x0t, x1t, x2t, x3t, Energia)
+
+disp("Os valores das energias acima estão em Joules (J).")
 
 % Indicar sinais ortogonais entre si
 for i = 1 : 4
