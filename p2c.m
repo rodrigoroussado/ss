@@ -1,3 +1,8 @@
+% Gonçalo Suzano – Nº 50382
+% Bruno Azinheirinha – Nº 50418
+% Rodrigo Viegas – Nº50977
+% LT22D - Grupo 8 - Turno L1
+
 clear; close all; clc
 
 % Definir variáveis
